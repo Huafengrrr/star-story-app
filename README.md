@@ -1,87 +1,86 @@
-# miniprogram-to-uniapp 转换说明
+# 🌌 Starry-Interactive (星空互动系统)
 
-## 0x00 转换模式
-根据转换模式，转换后的项目使用相应的工具打开，目前有两种模式：
+![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D)
+![uni-app](https://img.shields.io/badge/uni--app-2B9939?style=for-the-badge&logo=unocss&logoColor=white)
+![Serverless](https://img.shields.io/badge/Serverless-FD5750?style=for-the-badge&logo=serverless&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
-### HBuilder X 模式
-转换后的目录(以_uni结尾的目录), 需使用HBuilder X导入，进行运行和调试。
-如果项目使用了npm模块，需先使用npm install等命令进行安装，然后再运行
+> 基于 Serverless 架构与 uni-app 开发的跨平台多端实时互动与数字资产管理系统。
 
-### Vue-cli 模式
-转换后的目录(以_vue-cli结尾的目录), 需使用命令行安装依赖、运行和打包。
-详见文档：https://uniapp.dcloud.io/quickstart-cli.html#%E8%BF%90%E8%A1%8C%E3%80%81%E5%8F%91%E5%B8%83uni-app
+## 📖 项目简介
 
-注：
-上述两种项目类型，可以相互转换。
-[uni-app HBuilderX 工程与 vue-cli 工程相互转换](https://ask.dcloud.net.cn/article/35750)
+本项目是一个完整的全栈移动端应用，旨在提供低延迟、高可靠的跨设备互动体验。项目抛弃了传统的后端服务器运维，全面采用 **uniCloud (Serverless)** 架构，实现了从用户鉴权、数据持久化到云函数分发的全链路闭环。
 
+在前端 UI 层面，抛弃了臃肿的第三方组件库，采用纯 CSS3 硬件加速实现了极具沉浸感的“动态星空”视觉与 Glassmorphism（毛玻璃）交互界面。
 
-## 0x01 调试建议
-如果您想转换小程序为uni-app项目，并发布为App，
-建议运行到H5平台，因为H5平台速度快，而且与App平台贴合度更高。
-只有当强依赖硬件时，才使用真机调试，这样可以节约时间！
+## ✨ 核心技术成果 (Core Achievements)
 
+### 1. 🚀 高可用跨端消息触达机制（双保险保活方案）
+针对各大安卓定制系统（如 MIUI、ColorOS）严苛的后台进程查杀与横幅通知拦截机制，设计并落地了**“长连接监听 + 异步轮询查岗”**的双保险兜底方案：
+* **链路 A (在线强提醒)**：集成 `uniPush 2.0` 扩展库，通过设备 CID 精准下发云端指令。在 App 生命周期内注册全局监听器 (`uni.onPushMessage`)，半路拦截底层系统信号，实现 100% 触发应用内自定义全局模态框与震动反馈。
+* **链路 B (离线状态同步)**：构建基于 NoSQL 的云端信箱 (`star_notifications`)。利用前端 `onShow` 生命周期进行异步轮询，确保应用在被系统强杀重启后，依然能无损拉取并重放离线期间的关键业务指令。
 
-## 0x02 常见问题
-### 1.命令行提示：“'wtu'不是内部或外部命令, 也不是可运行的程序”
-一般是node未安装在默认目录导致的，参照文章 [解决“npm不是内部或外部命令“](https://www.cnblogs.com/ldq678/p/10291824.html) 解决。
+### 2. ⚡️ Serverless 全栈架构闭环
+* 独立完成云端 NoSQL 数据库的设计（包含 `star_users`, `ticket_wallet`, `ticket_history` 等集合），实现多表联动。
+* 编写基于 Node.js 的云函数 (`send-ticket-push`)，处理高并发下的库存扣减、历史账单生成与推送指令下发，确保业务闭环的原子性与数据一致性。
+* 彻底免除传统后端的服务器部署与接口跨域烦恼，接口响应时间大幅缩短。
 
+### 3. 🎨 零依赖的高性能渲染 UI
+* 纯手写前端交互逻辑，利用 CSS3 `@keyframes` 与 `repeating-radial-gradient` 构建了低 GPU 消耗的无限循环星空背景。
+* 大面积应用 `backdrop-filter: blur()` 实现多层级的毛玻璃视觉，在保证跨平台（Android/iOS）兼容性的同时，将核心安装包体积压缩至极致。
 
-### 2.PowerShell里提示：无法加载文件 XXXXXXXXX.ps1，因为在此系统上禁止运行脚本。
-以管理员身份运行`powershell`，执行
-```
-set-executionpolicy remotesigned
-```
-输入 y 即可
-或者，在PowerShell输入 `cmd` 后回车也行
+## 🛠 技术栈 (Tech Stack)
 
+* **前端框架**：Vue.js, uni-app
+* **后端架构**：uniCloud (阿里云 Serverless), Node.js 云函数
+* **数据库**：uniCloud DB (NoSQL / MongoDB 语法)
+* **核心模块**：uniPush 2.0 (实时消息推送 SDK)
+* **UI/样式**：纯原生 CSS3, Flexbox 响应式布局
 
-### 3.setData为什么没有转换？需要我手动改吗？那我有100多个页面怎么改呀？
-`setData`函数已内置，在main.js通过mixin全局混入，所以不用转换，可直接使用`setData`函数！！！
-
-
-### 4.命令行报错："cannot read property ‘某某某’ of undefined"
-报错解释：有代码“`xx.某某某`”，但xx的值是undefined，因此，需要进报错的页面，调试调试，为啥xx为undefined，相应的调试代码即可。
-常见原因：可能接口跨域，可能真的没值，也可能没声明变量，也可能是工具转换问题等。
+## 📱 核心界面展示 (Screenshots)
 
 
-### 5.为什么我运行到H5或app时，拿不到小程序用户的信息？为什么登录失败？
-转换后的uni-app项目，如需运行到其他小程序、H5和App时，登录和支付功能均需“重新对接”，需要增加 “新” 接口！
+| 登录鉴权模块 | 核心资产卡包 | 首页 |
+| :---: | :---: | :---: |
+| <img src="./images/login.png" width="250" /> | <img src="./images/wallet.png" width="250" /> | <img src="./images/index.png" width="250" /> |
 
+## 📦 快速开始 (Quick Start)
 
-### 6.跨域问题：为什么我的接口都没有返回数据呀？
-控制台有“CORS”、“Access-Control-Allow-Origin”等关键字时，不要犹豫，果断判断是因为跨域，导致访问接口失败。
-跨域，前端老生常谈，有N种解决办法，最简单的办法是运行到“内置浏览器”。
-PS: 仅仅 H5 平台存在跨域问题！发布后上传到服务器无此问题！
+如果你想在本地运行或二次开发本项目，请按照以下步骤操作：
 
+1. **克隆项目到本地**
+   ```bash
+   git clone
+   导入开发工具
 
-### 7.Vant项目怎么转换呀？
+2. 下载并安装 HBuilderX。
 
-Vant项目比较常见的报错是：代码`<button class="{{ utils.bem('action-sheet__item', { disabled: item.disabled || item.loading }) }} {{ item.className || '' }}"></button>`转到后，运行会报错，因为uni-app不支持在class里面写函数）
+在 HBuilderX 中点击 文件 -> 导入 -> 从本地目录导入，选择克隆下来的项目文件夹。
 
-由于Vant的一些语法uni-app并不支持，因此需要特殊处理一下，这里分享三种方案，可以根据自己的情况进行选择。
+3. 配置 Serverless 环境
 
-#### 方案一：【替换Vant组件】
-转换前，将vant组件全部用别的组件库替换掉再转换。
+在 HBuilderX 中右键点击 uniCloud 目录，选择 关联云服务空间。
 
-#### 方案二：【替换Vant组件】
-转换后，将vant组件使用uview1.x替换掉同功能组件。
+右键点击 database 目录，选择 初始化云数据库 (上传所有 schema)。
 
-#### 方案三：【不替换Vant组件】
-转换后，按uniapp引入小程序组件文档重新引入vant组件（小程序自定义组件支持：
-https://uniapp.dcloud.io/tutorial/miniprogram-subject.html#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E6%94%AF%E6%8C%81）
+右键点击 cloudfunctions 目录下的云函数，选择 上传部署。
 
+4. 编译运行
 
-### 8.小程序转换为uni-app项目后，还能转换成其他小程序项目吗？
-当然可以，必须可以！
-小程序转换为uni-app项目后，就是uni-app项目了，uni-app项目能做啥就能做啥，
-能再次生成为各种小程序、发布H5和App。
+点击顶部菜单栏 运行 -> 运行到手机或模拟器 / 运行到内置浏览器。
 
+📝 目录结构简析
+Plaintext
+├── App.vue                 # 应用配置与全局推送监听器 (第一道保险)
+├── pages/
+│   ├── login/              # 登录与设备 CID 强绑定逻辑
+│   ├── storyList/          # 业务大厅与离线消息轮询 (第二道保险)
+│   └── cardWallet/         # 核心交互页：券包渲染、状态结算、发射云函数
+├── uniCloud/
+│   ├── cloudfunctions/     # 后端 Node.js 业务逻辑代码
+│   └── database/           # NoSQL 数据库集合的 Schema 设计图纸
+└── manifest.json           # 应用配置 (打包、Push模块声明)
+🤝 开发者 (Author)
+全栈开发：[张梓铧]
 
-### 9.uni-app生成的小程序项目，还能再转换回uni-app项目吗？
-不能。不支持这种项目的转换！
-
-
-### 其他
-- 因各种原因，本工具并非100%完美转换！有问题实属正常！
-- 如遇运行报错，请在https://github.com/zhangdaren/miniprogram-to-uniapp，将详细情况提交Issue！
+核心定位：深入探索移动端跨设备通信与 Serverless 落地实践。
