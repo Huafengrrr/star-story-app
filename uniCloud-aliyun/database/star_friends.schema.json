@@ -1,0 +1,1 @@
+{"bsonType":"object","required":["userId","friendId"],"permission":{"read":true,"create":true,"update":true,"delete":true},"properties":{"_id":{"description":"系统生成的记录ID"},"userId":{"bsonType":"string","description":"发起人的专属ID"},"friendId":{"bsonType":"string","description":"被添加人的专属ID"},"createTime":{"bsonType":"number","description":"建立时间"}}}

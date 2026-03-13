@@ -1,0 +1,11 @@
+{
+  "name": "send-ticket-push",
+  "version": "1.0.0",
+  "description": "发射特权警报弹窗",
+  "main": "index.js",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-push": {}
+  },
+  "author": "xiaohuazi"
+}

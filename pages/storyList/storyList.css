@@ -1,0 +1,534 @@
+/* 容器底色改为透明，把舞台让给背后的星空图片 */
+.container {
+    min-height: 100vh;
+    background-color: transparent;
+    position: relative;
+}
+
+/* =========================================
+   🪐 固定的星空背景层 (恢复纯代码动态星空)
+   ========================================= */
+.night-sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    /* 恢复深邃的径向渐变底色 */
+    background: radial-gradient(circle at center, #0a1128 0%, #000000 100%);
+}
+
+/* 🔴 恢复：流动的星星粒子系统 */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.stars-slow {
+    background-image: repeating-radial-gradient(white, rgba(255, 255, 255, 0.2) 1rpx, transparent 2rpx, transparent 100rpx),
+        repeating-radial-gradient(white, rgba(255, 255, 255, 0.1) 1rpx, transparent 1rpx, transparent 80rpx);
+    background-size: 500rpx 500rpx;
+    opacity: 0.3;
+    animation: starsMove 200s linear infinite;
+}
+
+.stars-fast {
+    background-image: repeating-radial-gradient(white, rgba(255, 255, 255, 0.3) 2rpx, transparent 3rpx, transparent 150rpx);
+    background-size: 400rpx 400rpx;
+    opacity: 0.6;
+    animation: starsMove 120s linear infinite;
+}
+
+@keyframes starsMove {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 1000rpx 1000rpx;
+    }
+}
+
+/* 💫 流星系统保持不变 */
+.meteors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+/* ... 往下原有的 .meteor 和前景内容的样式都不需要修改！ ... */
+
+.meteor {
+    position: absolute;
+    width: 4rpx;
+    height: 4rpx;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15rpx 3rpx rgba(255, 255, 255, 0.8);
+    opacity: 0;
+}
+
+.meteor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 150rpx;
+    height: 2rpx;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent);
+}
+
+@keyframes meteorFly {
+    0% {
+        opacity: 0;
+        transform: rotate(-45deg) translateX(0);
+    }
+    10% {
+        opacity: 0.8;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(-45deg) translateX(-1500rpx);
+    }
+}
+
+.m1 {
+    top: 10%;
+    left: 90%;
+    animation: meteorFly 4s linear infinite;
+    animation-delay: 2s;
+}
+.m2 {
+    top: 30%;
+    left: 110%;
+    animation: meteorFly 5s linear infinite;
+    animation-delay: 6s;
+}
+.m3 {
+    top: -10%;
+    left: 60%;
+    animation: meteorFly 4.5s linear infinite;
+    animation-delay: 10s;
+}
+
+/* =========================================
+   📖 前景内容区与组件
+   ========================================= */
+.content-area {
+    padding: 30rpx;
+    padding-top: 50rpx;
+}
+
+.user-profile-btn {
+    position: absolute;
+    top: 50rpx;
+    right: 40rpx;
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    border: 4rpx solid rgba(255, 176, 32, 0.6);
+    box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+}
+.mini-avatar {
+    width: 100%;
+    height: 100%;
+}
+
+/* 🔍 搜索框 */
+.search-bar {
+    margin-top: 80rpx;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 60rpx;
+    padding: 15rpx 30rpx;
+    margin-bottom: 40rpx;
+    box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
+}
+.search-icon {
+    margin-right: 15rpx;
+    margin-top: 4rpx;
+}
+.search-input {
+    flex: 1;
+    color: #fff;
+    font-size: 28rpx;
+}
+.clear-icon {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 40rpx;
+    padding: 0 10rpx;
+    line-height: 1;
+}
+
+/* 🔒 专属私密卡片 */
+.vip-column {
+    margin-bottom: 35rpx;
+    background: linear-gradient(135deg, rgba(255, 176, 32, 0.2), rgba(255, 255, 255, 0.05)) !important;
+    border: 1px solid rgba(255, 176, 32, 0.4) !important;
+}
+.vip-content {
+    padding: 40rpx;
+    display: flex;
+    align-items: center;
+}
+.vip-icon {
+    font-size: 60rpx;
+    margin-right: 30rpx;
+}
+.vip-text {
+    display: flex;
+    flex-direction: column;
+}
+.vip-title {
+    color: #ffb020;
+    font-size: 34rpx;
+    font-weight: bold;
+    text-shadow: 0 0 10rpx rgba(255, 176, 32, 0.5);
+}
+.vip-sub {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 24rpx;
+    margin-top: 10rpx;
+}
+
+/* 📚 故事列表卡片毛玻璃效果 */
+.story-list {
+    display: flex;
+    flex-direction: column;
+    gap: 35rpx;
+}
+
+.story-card {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24rpx;
+    overflow: hidden;
+    box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.story-card:active {
+    transform: scale(0.98);
+}
+.story-cover {
+    width: 200rpx;
+    height: 200rpx;
+}
+.story-info {
+    padding: 30rpx;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.story-title {
+    font-size: 34rpx;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+}
+
+/* 📄 分页控制 */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60rpx;
+    padding-bottom: 60rpx;
+}
+.page-btn {
+    font-size: 28rpx;
+    background: rgba(255, 176, 32, 0.8) !important;
+    color: white !important;
+    border: 1px solid #ffb020;
+    margin: 0;
+    width: 200rpx;
+    border-radius: 40rpx;
+    backdrop-filter: blur(5px);
+}
+.page-btn[disabled] {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.page-num {
+    font-size: 30rpx;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+}
+
+/* =========================================
+   🛡️ 毛玻璃密码弹窗
+   ========================================= */
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-box {
+    width: 600rpx;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30rpx;
+    padding: 50rpx 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10rpx 50rpx rgba(0, 0, 0, 0.5);
+    animation: popIn 0.3s ease-out forwards;
+}
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.modal-title {
+    color: #fff;
+    font-size: 36rpx;
+    font-weight: bold;
+    margin-bottom: 40rpx;
+}
+.modal-input {
+    width: 80%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20rpx;
+    padding: 20rpx;
+    color: #ffb020;
+    text-align: center;
+    font-size: 32rpx;
+    letter-spacing: 10rpx;
+    margin-bottom: 50rpx;
+}
+.modal-btns {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.m-btn {
+    padding: 20rpx 60rpx;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+}
+.cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+}
+.confirm {
+    background: #ffb020;
+    color: #fff;
+    box-shadow: 0 0 20rpx rgba(255, 176, 32, 0.4);
+}
+
+/* =========================================
+   ✨ 右下角悬浮发布按钮 (FAB)
+   ========================================= */
+.fab-btn {
+    position: fixed;
+    bottom: 80rpx; /* 距离底部的高度 */
+    right: 50rpx; /* 距离右侧的宽度 */
+    width: 110rpx;
+    height: 110rpx;
+    background: linear-gradient(135deg, #ffb020, #ff8c00);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10rpx 30rpx rgba(255, 176, 32, 0.5);
+    z-index: 100; /* 确保悬浮在所有列表卡片的最前面 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-btn:active {
+    transform: scale(0.9); /* 点击时微缩回弹 */
+    box-shadow: 0 5rpx 15rpx rgba(255, 176, 32, 0.4);
+}
+
+.fab-icon {
+    color: #fff;
+    font-size: 70rpx;
+    font-weight: 300;
+    margin-top: -10rpx; /* 微调加号使其视觉绝对居中 */
+    text-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   ☕ 左下角悬浮按钮 (星空咖啡店)
+   ========================================= */
+.fab-btn-left {
+    position: fixed;
+    bottom: 80rpx;
+    left: 50rpx; /* 🔴 核心：贴靠屏幕左侧 */
+    width: 110rpx;
+    height: 110rpx;
+    /* 采用醇厚的拿铁咖啡渐变色 */
+    background: linear-gradient(135deg, #8b5a2b, #5c3a21);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10rpx 30rpx rgba(92, 58, 33, 0.5);
+    z-index: 100;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-btn-left:active {
+    transform: scale(0.9);
+    box-shadow: 0 5rpx 15rpx rgba(92, 58, 33, 0.4);
+}
+
+.fab-btn-left .fab-icon {
+    font-size: 50rpx; /* emoji 稍微小一点点更精致 */
+    margin-top: -6rpx;
+    text-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.4);
+}
+
+.title {
+    color: #ffffff;
+    font-size: 46rpx;
+    font-weight: 900;
+    letter-spacing: 6rpx;
+    font-family: '幼圆', 'Comic Sans MS', 'PingFang SC', rounded, cursive, sans-serif;
+    text-align: center;
+    display: block;
+
+    background: linear-gradient(to bottom, #ffffff 0%, #e0f7fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* 🔴 新增：绑定呼吸动画，2.5秒一个来回，无限循环，平滑过渡 */
+    animation: starryBreathe 2.5s infinite alternate ease-in-out;
+}
+
+/* 🪄 动画核心：透明度和发光阴影的交替变化 */
+@keyframes starryBreathe {
+    0% {
+        opacity: 0.85;
+        filter: drop-shadow(0 4rpx 10rpx rgba(255, 255, 255, 0.4));
+    }
+    100% {
+        opacity: 1;
+        filter: drop-shadow(0 6rpx 20rpx rgba(255, 255, 255, 0.9)) drop-shadow(0 0 30rpx rgba(224, 247, 250, 0.6));
+    }
+}
+/* =========================================
+   🛡️ 毛玻璃密码弹窗 (极光青色版)
+   ========================================= */
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-box {
+    width: 600rpx;
+    background: rgba(20, 25, 40, 0.85);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    border-radius: 30rpx;
+    padding: 50rpx 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10rpx 50rpx rgba(0, 0, 0, 0.8);
+    animation: popIn 0.3s ease-out forwards;
+}
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.modal-title {
+    color: #00ffcc;
+    font-size: 36rpx;
+    font-weight: bold;
+    margin-bottom: 10rpx;
+    text-shadow: 0 0 10rpx rgba(0, 255, 204, 0.4);
+}
+.modal-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 24rpx;
+    margin-bottom: 40rpx;
+}
+.modal-input {
+    width: 80%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20rpx;
+    padding: 20rpx;
+    color: #00ffcc;
+    text-align: center;
+    font-size: 32rpx;
+    letter-spacing: 10rpx;
+    margin-bottom: 50rpx;
+    border: 1px solid rgba(0, 255, 204, 0.2);
+}
+.modal-btns {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.m-btn {
+    padding: 20rpx 60rpx;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+}
+.cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+}
+/* 极光青色按钮，充满极客感 */
+.confirm {
+    background: linear-gradient(135deg, #00ffcc, #00b3a6);
+    color: #000;
+    box-shadow: 0 0 20rpx rgba(0, 255, 204, 0.5);
+}
+.confirm:active {
+    transform: scale(0.95);
+}

@@ -1,0 +1,87 @@
+{
+	"pages": [
+		{
+			"path": "pages/login/login",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		
+		{
+			"path": "pages/index/index",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		
+		{
+			"path": "pages/friends/friends",
+			"style": {
+				"navigationBarTitleText": "星空羁绊"
+			}
+		},
+		
+		
+		{
+			"path": "pages/storyList/storyList",
+			"style": {
+				"usingComponents": {},
+				"navigationBarTitleText": "故事列表"
+			}
+		},
+		{
+			"path": "pages/storyDetail/storyDetail",
+			"style": {
+				"usingComponents": {},
+				"navigationBarTitleText": "正在收听",
+				"navigationBarBackgroundColor": "#f7f7f7"
+			}
+		},
+		
+		{
+			"path": "pages/coffee/coffee",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		{
+			"path": "pages/coffeeBoard/coffeeBoard",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		{
+			"path": "pages/secretRadar/secretRadar",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		{
+			"path": "pages/cardWallet/cardWallet",
+			"style": {
+				"usingComponents": {}
+			}
+		},
+		{
+			"path": ".gitignore/.gitignore",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}
+		
+		
+	],
+	"lazyCodeLoading": "requiredComponents",
+	"globalStyle": {
+		"navigationBarTitleText": "小华子的故事屋",
+		"navigationBarBackgroundColor": "#ffffff",
+		"navigationBarTextStyle": "black"
+	},
+	"subPackages": []
+}

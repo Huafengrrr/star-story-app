@@ -1,0 +1,10 @@
+node_modules/
+.project
+.npm
+package-lock.json
+unpackage/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

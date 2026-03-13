@@ -1,0 +1,1 @@
+{"bsonType":"object","required":["name","count"],"permission":{"read":true,"create":true,"update":true,"delete":true},"properties":{"_id":{"description":"存储ID，系统自动生成"},"name":{"bsonType":"string","description":"特权券的名字（必须和代码里的名字一模一样，比如：奶茶券）"},"count":{"bsonType":"number","description":"剩余可使用的数量"}}}
