@@ -50,7 +50,7 @@
 
 1. **克隆项目到本地**
    ```bash
-   git clone
+   git clone https://github.com/Huafengrrr/star-story-app.git
    导入开发工具
 
 2. 下载并安装 HBuilderX。
