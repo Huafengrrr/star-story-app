@@ -42,7 +42,7 @@
 
 | 登录鉴权模块 | 核心资产卡包 | 首页 |
 | :---: | :---: | :---: |
-| <img src="./images/login.png" width="250" /> | <img src="./images/wallet.png" width="250" /> | <img src="./images/index.png" width="250" /> |
+| <img src="./images/login2.png" width="250" /> | <img src="./images/wallet.png" width="250" /> | <img src="./images/index.png" width="250" /> |
 
 ## 📦 快速开始 (Quick Start)
 
