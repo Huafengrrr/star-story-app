@@ -73,6 +73,12 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "images/images",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 		
 		
